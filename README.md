@@ -1,0 +1,2 @@
+# complex-bookshops
+A web bookshop is developed, which will display a list of books via a catalog and allows orders to be placed. The available books have to be queried by a book wholesaler and, if necessary, new books can be imported. Orders should be transferred to the wholesaler for delivery. The "payment" needs to be done with the real Stripe payment system in a demo mode. The development should preferably be done with VueJS, so that the most effective and modern single page application can be offered to the customer. 
