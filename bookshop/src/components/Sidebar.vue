@@ -5,7 +5,9 @@
         <p>
           Here is the list of the book you have chosen.
         </p>
-        <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
+        <ul id="item_selected">
+        </ul>
+        <b-button>Buy</b-button>
       </div>
     </b-sidebar>
   </div>
