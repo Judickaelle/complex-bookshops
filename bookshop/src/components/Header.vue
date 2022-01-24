@@ -1,12 +1,8 @@
 <template>
-    <div>
+    <div id="header">
         <b-navbar toggleable="lg" type="dark" variant="info">
             <b-navbar-brand class="ml-7" href="#">Bookshop</b-navbar-brand>
-                <!--search form-->
-               <b-form class="inline right-align">
-                    <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
-                     <b-button class="ml-7" type="submit">Search</b-button>
-                </b-form>
+            <b-button v-b-toggle.sidebar-right class="ml-7 inline right-align"><img src="..\assets\icons8-shopping-cart-60.png" width="45%" height="auto" alt=" shopping card"></b-button>
         </b-navbar>
     </div>
 </template>

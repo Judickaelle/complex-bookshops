@@ -1,5 +1,5 @@
 <template>
-    <b-container class="p-20" fluid>
+    <b-container id="body" class="p-20" fluid>
     <!-- User Interface controls -->
         <b-row>
             <b-col lg="6" class="my-1">
