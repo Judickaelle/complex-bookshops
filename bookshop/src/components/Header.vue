@@ -2,7 +2,7 @@
     <div id="header">
         <b-navbar toggleable="lg" type="dark" variant="info">
             <b-navbar-brand class="ml-7" href="#">Bookshop</b-navbar-brand>
-        <b-button v-b-toggle.sidebar-right class="ml-7 inline right-align"><img src="..\assets\icons8-shopping-cart-60.png" width="45%" height="auto" alt=" shopping card"></b-button>
+        <b-button v-b-toggle.sidebar-right class="ml-7 inline right-align"><img src="..\assets\icons8-shopping-cart-60.png" width="45%" height="auto" alt=" shopping cart"></b-button>
         </b-navbar>
     </div>
 </template>

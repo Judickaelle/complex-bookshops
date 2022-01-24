@@ -68,9 +68,10 @@
             </template>
 
             <template #cell(actions)="row">
-                <b-button size="sm pr-1" @click="row.toggleDetails" class="pr-1">
+                <b-button size="sm pr-1" @click="row.toggleDetails" class="ml-7">
                 {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
                 </b-button>
+                <b-button @click="add(row.item, $event.target)" size="sm pr-1" class="ml-7">Add to cart</b-button>
             </template>
 
             <template #row-details="row">
@@ -81,6 +82,11 @@
                 </b-card>
             </template>
         </b-table>
+
+        <!-- Add to cart modal -->
+        <b-modal :id="addModal.id" :title="addModal.title" @hide="resetInfoModal">
+            <pre>{{ addModal.content }}</pre>
+        </b-modal>
     </b-container>
 </template>
 
@@ -107,9 +113,9 @@
         sortDirection: 'asc',
         filter: null,
         filterOn: [],
-        infoModal: {
+        addModal: {
           id: 'info-modal',
-          title: '',
+          title: 'Add this book to cart',
           content: ''
         }
       }
@@ -130,9 +136,18 @@
     },
     methods: {
         onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
-        this.currentPage = 1}
+            // Trigger pagination to update the number of buttons/pages due to filtering
+            this.totalRows = filteredItems.length
+            this.currentPage = 1
+        },
+        add(item, button){
+            this.addModal.content = item.Produkttitel
+            this.$root.$emit('bv::show::modal', this.addModal.id, button)
+        },
+        resetInfoModal() {
+            this.infoModal.title = ''
+            this.infoModal.content = ''
+        },
     }
   }
 </script>
