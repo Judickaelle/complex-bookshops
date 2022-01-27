@@ -62,7 +62,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :busy.sync="isBusy" :items="allRecords" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
+        <b-table :busy.sync="isBusy" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
 
             <template #cell(Produkttitel)="row">
                 {{ row.value }}
@@ -85,7 +85,7 @@
         </b-table>
 
         <!-- Add to cart modal -->
-        <b-modal :id="addModal.id" :title="addModal.title" hide-footer>
+        <b-modal :id="addModal.id" title="Add this book to cart">
             <div class="inline">
                     <div >{{ addModal.content }}</div>
                     <div class="quantity-toggle right-align ml-7">
@@ -93,13 +93,17 @@
                         <input type="text" :value="quantity" readonly>
                         <button @click="increment()">&#xff0b;</button>
                     </div>
-                    <b-button @click="addCart(addModal.info, quantity)">Add to cart</b-button>
             </div>
+            <b-alert v-model="showSuccessAlert" variant="success">Your cart has been updated</b-alert>
+            <b-button @click="addCart(addModal.info, quantity)">Add to cart</b-button>
+            <template #modal-footer="{ cancel }">
+                 <b-button variant="outline-danger" @click="cancel()">Close</b-button>
+            </template>
         </b-modal>
     </b-container>
 </template>
 
-<!--<script src='https://unpkg.com/axios/dist/axios.min.js'></script>-->
+
 <script>
 import axios from 'axios'
   //const axios = require('axios').default;
@@ -108,14 +112,13 @@ import axios from 'axios'
     data() {
       return {
         isBusy: false,
-        //items: [],
+        showSuccessAlert: false,
         quantity: 1,
-
-        //     [
-        //     {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
-        //     {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
-        //     {"ID":"3","Produktcode":"003","Produkttitel":"JavaScript-Frameworks","Autorname":"Jean","Verlagsname":"","PreisNetto":"41.73000","Mwstsatz":"7","PreisBrutto":"39.00000","Lagerbestand":"14","Kurzinhalt":"รงa fait cher\r\n","Gewicht":"1300","LinkGrafik":""}
-        // ],
+        items:  [
+             {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
+             {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
+             {"ID":"3","Produktcode":"003","Produkttitel":"JavaScript-Frameworks","Autorname":"Jean","Verlagsname":"","PreisNetto":"41.73000","Mwstsatz":"7","PreisBrutto":"39.00000","Lagerbestand":"14","Kurzinhalt":"รงa fait cher\r\n","Gewicht":"1300","LinkGrafik":""}
+         ],
 
         fields: [
           { key: 'Produkttitel', label: 'Book title', sortable: true, sortDirection: 'desc' },
@@ -133,7 +136,6 @@ import axios from 'axios'
         filterOn: [],
         addModal: {
           id: 'info-modal',
-          title: 'Add this book to cart',
           content: '',
           info: ''
         }
@@ -154,18 +156,6 @@ import axios from 'axios'
       this.totalRows = this.items.length
     },
     methods: {
-        // allRecords: function () {
-        //   this.$parent.allRecords();
-        // },
-        //   axios.get('config.php')
-        //       .then(function (response) {
-        //         var allData = response.data;
-        //         return(allData);
-        //       })
-        //       .catch(function (error) {
-        //         console.log(error);
-        //       });
-        // },
         allRecords: async function () {
           //getAllRecord(){
           this.isBusy = true
@@ -180,16 +170,14 @@ import axios from 'axios'
               });
           this.isBusy = false
           return allData;
-
         },
-
         onFiltered(filteredItems) {
             // Trigger pagination to update the number of buttons/pages due to filtering
             this.totalRows = filteredItems.length
             this.currentPage = 1
-            this.$refs.table.refresh();
         },
         add(item, button){
+            this.showSuccessAlert = false
             this.addModal.content = item.Produkttitel
             this.addModal.info = JSON.stringify(item, null, 2)
             this.$root.$emit('bv::show::modal', this.addModal.id, button)
@@ -213,14 +201,12 @@ import axios from 'axios'
                 var li = document.createElement("li");
                 li.appendChild(document.createTextNode(book.Produkttitel + " | quantity : " + quantity));
                 ul.appendChild(li)
+                this.showSuccessAlert = true
             } catch (ex) {
                 console.error(ex);
             }
         }
     },
-    // beforeMount(){
-    //   this.allRecords();
-    // },
   }
 </script>
 
