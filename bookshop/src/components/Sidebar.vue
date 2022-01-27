@@ -52,12 +52,55 @@ export default {
           quantity: 1,
         },
       ],
-      successURL: 'http://localhost:8080',
-      cancelURL: 'http://localhost:8080',
+      successURL: 'https://iws107.informatik.htw-dresden.de/ewa/G09/Bookshop/',
+      cancelURL: 'https://iws107.informatik.htw-dresden.de/ewa/G09/Bookshop/',
     };
   },
   methods: {
     submit () {
+
+      var a = 0
+      var b = 0
+      var c = 0
+      this.lineItems= []
+
+      if(document.getElementById('PHP-Kochbuch')){
+        a=document.getElementById('PHP-Kochbuch').innerHTML;
+        a=a.split(": ");
+        a=parseInt(a[1]);
+        this.lineItems.push(
+            {
+          price: 'price_1KGPlDCjyN8XrbQRmEVVv2BV', // The id of the PHP-Kochbuch
+          quantity: a,
+            }
+        )
+      }
+      if(document.getElementById('Java-Kochbuch')){
+        b=parseInt(document.getElementById('Java-Kochbuch').innerHTML);
+        b=document.getElementById('Java-Kochbuch').innerHTML;
+        b=b.split(": ");
+        b=parseInt(b[1]);
+        this.lineItems.push(
+            {
+              price: 'price_1KLX53CjyN8XrbQRAyoxMmMz', // The id of the Java-Kochbuch
+              quantity: b,
+            }
+        )
+      }
+      if(document.getElementById('JavaScript-Frameworks')){
+        c=parseInt(document.getElementById('JavaScript-Frameworks').innerHTML);
+        c=document.getElementById('JavaScript-Frameworks').innerHTML;
+        c=c.split(": ");
+        c=parseInt(c[1]);
+        this.lineItems.push(
+            {
+              price: 'price_1KLX60CjyN8XrbQRRiXPyzlY', // The id of the JavaScript-Frameworks
+              quantity: c,
+            }
+        )
+      }
+
+
       // You will be redirected to Stripe's secure checkout page
       this.$refs.checkoutRef.redirectToCheckout();
     },

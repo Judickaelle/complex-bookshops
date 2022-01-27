@@ -62,7 +62,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :busy.sync="isBusy" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
+        <b-table :busy.sync="isBusy" :items="allRecords" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
 
             <template #cell(Produkttitel)="row">
                 {{ row.value }}
@@ -113,13 +113,14 @@ import axios from 'axios'
       return {
         isBusy: false,
         showSuccessAlert: false,
+        items: [],
         quantity: 1,
-        items:  [
-             {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
-             {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
-             {"ID":"3","Produktcode":"003","Produkttitel":"JavaScript-Frameworks","Autorname":"Jean","Verlagsname":"","PreisNetto":"41.73000","Mwstsatz":"7","PreisBrutto":"39.00000","Lagerbestand":"14","Kurzinhalt":"รงa fait cher\r\n","Gewicht":"1300","LinkGrafik":""}
-         ],
 
+        //     [
+        //     {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
+        //     {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
+        //     {"ID":"3","Produktcode":"003","Produkttitel":"JavaScript-Frameworks","Autorname":"Jean","Verlagsname":"","PreisNetto":"41.73000","Mwstsatz":"7","PreisBrutto":"39.00000","Lagerbestand":"14","Kurzinhalt":"รงa fait cher\r\n","Gewicht":"1300","LinkGrafik":""}
+        // ],
         fields: [
           { key: 'Produkttitel', label: 'Book title', sortable: true, sortDirection: 'desc' },
           { key: 'Autorname', label: 'Author', sortable: true, sortDirection: 'desc', class: 'text-center' },
@@ -169,6 +170,7 @@ import axios from 'axios'
                 console.log(error);
               });
           this.isBusy = false
+          this.items = allData;
           return allData;
         },
         onFiltered(filteredItems) {
@@ -199,6 +201,7 @@ import axios from 'axios'
                 var book = JSON.parse(item); 
                 var ul = document.getElementById("item_selected");
                 var li = document.createElement("li");
+                li.setAttribute('id', book.Produkttitel);
                 li.appendChild(document.createTextNode(book.Produkttitel + " | quantity : " + quantity));
                 ul.appendChild(li)
                 this.showSuccessAlert = true
