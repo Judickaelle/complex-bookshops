@@ -40,12 +40,20 @@ export default {
       loading: false,
       lineItems: [
         {
-          price: 'price_1KGPlDCjyN8XrbQRmEVVv2BV', // The id of the one-time price you created in your Stripe dashboard
+          price: 'price_1KGPlDCjyN8XrbQRmEVVv2BV', // The id of the PHP-Kochbuch
+          quantity: 1,
+        },
+        {
+          price: 'price_1KLX53CjyN8XrbQRAyoxMmMz', // The id of the Java-Kochbuch
+          quantity: 1,
+        },
+        {
+          price: 'price_1KLX60CjyN8XrbQRRiXPyzlY', // The id of the JavaScript-Frameworks
           quantity: 1,
         },
       ],
-      successURL: 'https://stackoverflow.com/questions/63079821/unknown-custom-element-vue-stripe-checkout-did-you-register-the-component-c',
-      cancelURL: 'https://stackoverflow.com/questions/56571446/stripe-redirecttocheckout-method-redirects-to-successful-url-before-showing-any',
+      successURL: 'http://localhost:8080',
+      cancelURL: 'http://localhost:8080',
     };
   },
   methods: {

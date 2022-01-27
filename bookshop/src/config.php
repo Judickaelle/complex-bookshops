@@ -1,8 +1,8 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "G09";
+$password = "ws21roge";
 $dbname = "g09";
 
 try{
@@ -21,3 +21,4 @@ try{
     $error = die('Error : ' . $e->getMessage());
     debug_to_console($error);
 }
+?>

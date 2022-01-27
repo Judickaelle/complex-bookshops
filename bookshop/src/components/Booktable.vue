@@ -62,7 +62,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
+        <b-table :items="allRecords()" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
             <template #cell(Produkttitel)="row">
                 {{ row.value }}
             </template>
@@ -98,16 +98,21 @@
     </b-container>
 </template>
 
+<!--<script src='https://unpkg.com/axios/dist/axios.min.js'></script>-->
 <script>
+import axios from 'axios'
+  //const axios = require('axios').default;
   export default {
     data() {
       return {
         quantity: 1,
-        items:[
+        items:
+            [
             {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
             {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
             {"ID":"3","Produktcode":"003","Produkttitel":"JavaScript-Frameworks","Autorname":"Jean","Verlagsname":"","PreisNetto":"41.73000","Mwstsatz":"7","PreisBrutto":"39.00000","Lagerbestand":"14","Kurzinhalt":"รงa fait cher\r\n","Gewicht":"1300","LinkGrafik":""}
         ],
+
         fields: [
           { key: 'Produkttitel', label: 'Book title', sortable: true, sortDirection: 'desc' },
           { key: 'Autorname', label: 'Author', sortable: true, sortDirection: 'desc', class: 'text-center' },
@@ -145,6 +150,30 @@
       this.totalRows = this.items.length
     },
     methods: {
+        // allRecords: function () {
+        //   this.$parent.allRecords();
+        // },
+        //   axios.get('config.php')
+        //       .then(function (response) {
+        //         var allData = response.data;
+        //         return(allData);
+        //       })
+        //       .catch(function (error) {
+        //         console.log(error);
+        //       });
+        // },
+        allRecords: function () {
+          //getAllRecord(){
+          axios.get('src/config.php')
+              .then(function (response) {
+                var allData = response.data;
+                return allData;
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+        },
+
         onFiltered(filteredItems) {
             // Trigger pagination to update the number of buttons/pages due to filtering
             this.totalRows = filteredItems.length

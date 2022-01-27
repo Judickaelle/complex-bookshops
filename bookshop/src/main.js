@@ -6,6 +6,8 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import axios from "axios";
+// import axios from "axios";
 //import { StripePlugin } from '@vue-stripe/vue-stripe';
 // import VueStripeCheckout from 'vue-stripe-checkout';
 
@@ -27,4 +29,17 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  methods: {
+    allRecords: function () {
+      axios.get('config.php')
+          .then(function (response) {
+            var allData = response.data;
+            return(allData);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    },
+
+  }
 }).$mount('#app')
