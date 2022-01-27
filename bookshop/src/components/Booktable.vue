@@ -238,6 +238,6 @@ import axios from 'axios'
         padding: .5rem;
         background: #f5f5f5;
         color: #888;
-        font-size:
+        /*font-size:*/
     }
 </style>
