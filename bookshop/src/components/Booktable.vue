@@ -84,8 +84,16 @@
         </b-table>
 
         <!-- Add to cart modal -->
-        <b-modal :id="addModal.id" :title="addModal.title" @hide="resetInfoModal">
-            <pre>{{ addModal.content }}</pre>
+        <b-modal :id="addModal.id" :title="addModal.title" hide-footer>
+            <div class="inline">
+                    <div >{{ addModal.content }}</div>
+                    <div class="quantity-toggle right-align ml-7">
+                        <button @click="decrement()">&mdash;</button>
+                        <input type="text" :value="quantity" readonly>
+                        <button @click="increment()">&#xff0b;</button>
+                    </div>
+                    <b-button @click="addCart(addModal.info, quantity)">Add to cart</b-button>
+            </div>
         </b-modal>
     </b-container>
 </template>
@@ -94,6 +102,7 @@
   export default {
     data() {
       return {
+        quantity: 1,
         items:[
             {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
             {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
@@ -116,7 +125,8 @@
         addModal: {
           id: 'info-modal',
           title: 'Add this book to cart',
-          content: ''
+          content: '',
+          info: ''
         }
       }
     },
@@ -142,12 +152,32 @@
         },
         add(item, button){
             this.addModal.content = item.Produkttitel
+            this.addModal.info = JSON.stringify(item, null, 2)
             this.$root.$emit('bv::show::modal', this.addModal.id, button)
         },
-        resetInfoModal() {
-            this.infoModal.title = ''
-            this.infoModal.content = ''
+        increment () {
+            this.quantity++
         },
+        decrement () {
+            if(this.quantity === 1) {
+                alert('Negative quantity not allowed')
+            } else {
+                this.quantity--
+            }
+        },
+        addCart(item, quantity){
+            //write in the sidebar the book title and the choosen quantity
+            //PREVOIR DE FERMEER LE MODAL 
+           try {
+                var book = JSON.parse(item); 
+                var ul = document.getElementById("item_selected");
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(book.Produkttitel + " | quantity : " + quantity));
+                ul.appendChild(li)
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
     }
   }
 </script>
@@ -159,5 +189,26 @@
 
     .pr-1{
         padding-right: 0.25em;
+    }
+
+    .quantity-toggle {
+        display: flex;
+    }
+
+    input {
+        border: 0;
+        border-top: 2px solid #ddd;
+        border-bottom: 2px solid #ddd;
+        width: 2.5rem;
+        text-align: center;
+        padding: 0 .5rem;
+    }
+    
+    button {
+        border: 2px solid #ddd;
+        padding: .5rem;
+        background: #f5f5f5;
+        color: #888;
+        font-size:
     }
 </style>

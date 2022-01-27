@@ -27,6 +27,8 @@ export default {
     .inline{
         display: inline-flex;
         width: auto;
+        justify-content: center;
+        align-items: center;
     }
 
     .right-align{
