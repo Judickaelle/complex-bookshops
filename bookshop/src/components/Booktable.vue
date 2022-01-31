@@ -86,16 +86,18 @@
 
         <!-- Add to cart modal -->
         <b-modal :id="addModal.id" title="Add this book to cart">
-            <div class="inline">
-                    <div >{{ addModal.content }}</div>
-                    <div class="quantity-toggle right-align ml-7">
-                        <button @click="decrement()">&mdash;</button>
-                        <input type="text" :value="quantity" readonly>
-                        <button @click="increment()">&#xff0b;</button>
-                    </div>
+            <div id="body-modal">
+                <div class="inline">
+                        <div >{{ addModal.content }}</div>
+                        <div class="quantity-toggle right-align ml-7">
+                            <button @click="decrement()">&mdash;</button>
+                            <input type="text" :value="quantity" readonly>
+                            <button @click="increment()">&#xff0b;</button>
+                            <b-button class="ml-7" @click="addCart(addModal.info, quantity)">Add to cart</b-button>
+                        </div>
+                </div>
+                <b-alert v-model="showSuccessAlert" variant="success" class="mt">Your cart has been updated</b-alert>
             </div>
-            <b-alert v-model="showSuccessAlert" variant="success">Your cart has been updated</b-alert>
-            <b-button @click="addCart(addModal.info, quantity)">Add to cart</b-button>
             <template #modal-footer="{ cancel }">
                  <b-button variant="outline-danger" @click="cancel()">Close</b-button>
             </template>
@@ -219,6 +221,10 @@ import axios from 'axios'
 <style>
     .p-20{
         padding: 1em 3em 0em 3em !important;
+    }
+
+    .mt{
+        margin-top: 2em;
     }
 
     .pr-1{
