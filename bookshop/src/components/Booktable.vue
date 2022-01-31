@@ -109,7 +109,6 @@
 <script>
 import axios from 'axios'
   //const axios = require('axios').default;
-
   export default {
     data() {
       return {
@@ -117,11 +116,6 @@ import axios from 'axios'
         showSuccessAlert: false,
         quantity: 1,
         items: [],
-        //     [
-        //     {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
-        //     {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
-        //     {"ID":"3","Produktcode":"003","Produkttitel":"JavaScript-Frameworks","Autorname":"Jean","Verlagsname":"","PreisNetto":"41.73000","Mwstsatz":"7","PreisBrutto":"39.00000","Lagerbestand":"14","Kurzinhalt":"รงa fait cher\r\n","Gewicht":"1300","LinkGrafik":""}
-        // ],
         fields: [
           { key: 'Produkttitel', label: 'Book title', sortable: true, sortDirection: 'desc' },
           { key: 'Autorname', label: 'Author', sortable: true, sortDirection: 'desc', class: 'text-center' },
