@@ -203,15 +203,26 @@ import axios from 'axios'
             //write in the sidebar the book title and the choosen quantity
             //PREVOIR DE FERMEER LE MODAL 
            try {
-                var book = JSON.parse(item); 
-                var ul = document.getElementById("item_selected");
+              var book = JSON.parse(item);
+              var ul = document.getElementById("item_selected");
+
+              if (!document.getElementById(book.Produkttitel)) {
                 var li = document.createElement("li");
                 li.setAttribute('id', book.Produkttitel);
                 li.appendChild(document.createTextNode(book.Produkttitel + " | quantity : " + quantity));
-                ul.appendChild(li)
-                this.showSuccessAlert = true
+                ul.appendChild(li);
+                this.showSuccessAlert = true;
+              } else {
+                var liBook=document.getElementById(book.Produkttitel).innerHTML;
+                var nBook=liBook.split(": ");
+                nBook=parseInt(nBook[1])+parseInt(quantity);
+                document.getElementById(book.Produkttitel).innerHTML = book.Produkttitel + " | quantity : " + nBook;
+                //li.appendChild(document.createTextNode(book.Produkttitel + " | quantity : " + nBook));
+
+              }
+
             } catch (ex) {
-                console.error(ex);
+              console.error(ex);
             }
         }
     },

@@ -1,7 +1,7 @@
 <template>
   <div id="sidebar">
     <b-sidebar id="sidebar-right" title="Shopping cart" right shadow>
-      <div class="px-3 py-2">
+      <div id="listbooks" class="px-3 py-2">
         <p>
           Here is the list of the book you have chosen.
         </p>
@@ -19,7 +19,7 @@
             @loading="v => loading = v"
         />
         <b-button @click="submit">Pay now!</b-button>
-        <b-button class="ml-7">Clear</b-button>
+        <b-button class="ml-7" @click="clear">Clear</b-button>
       </div>
     </b-sidebar>
   </div>
@@ -57,6 +57,15 @@ export default {
     };
   },
   methods: {
+    clear(){
+      // var list = document.getElementById('item_selected');
+      // list.remove();
+      // var listBooks = document.getElementById("listbooks");
+      // var emptyList = document.createElement("ul");
+      // emptyList.setAttribute('id', 'item_selected');
+      // listBooks.appendChild(emptyList);
+      document.getElementById("item_selected").innerHTML = "";
+    },
     submit () {
 
       var a = 0
