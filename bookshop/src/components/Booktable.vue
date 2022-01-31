@@ -62,7 +62,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :busy.sync="isBusy" :items="allRecords" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
+        <b-table :busy.sync="isBusy" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :filter-included-fields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" stacked="md" show-empty small @filtered="onFiltered">
 
             <template #cell(Produkttitel)="row">
                 {{ row.value }}
@@ -113,9 +113,8 @@ import axios from 'axios'
       return {
         isBusy: false,
         showSuccessAlert: false,
-        items: [],
         quantity: 1,
-
+        items: [],
         //     [
         //     {"ID":"1","Produktcode":"001","Produkttitel":"PHP-Kochbuch","Autorname":"Lucas","Verlagsname":"","PreisNetto":"26.10800","Mwstsatz":"7","PreisBrutto":"24.40000","Lagerbestand":"745","Kurzinhalt":"Very interesting book about PHP","Gewicht":"800","LinkGrafik":"http:zsedthujio.com"},
         //     {"ID":"2","Produktcode":"002","Produkttitel":"Java-Kochbuch","Autorname":"Albers","Verlagsname":"","PreisNetto":"19.26000","Mwstsatz":"7","PreisBrutto":"18.00000","Lagerbestand":"15","Kurzinhalt":"Very interesting book about Java","Gewicht":"600","LinkGrafik":"http:zsedthujio-java.com"},
@@ -152,9 +151,13 @@ import axios from 'axios'
           })
       }
     },
-    mounted() {
-      // Set the initial number of items
-      this.totalRows = this.items.length
+    mounted () {
+        // get all the records available
+        this.allRecords();
+        // Set the initial number of items
+        this.totalRows = this.items.length
+        console.log("I am mounted")
+        
     },
     methods: {
         allRecords: async function () {
@@ -171,7 +174,7 @@ import axios from 'axios'
               });
           this.isBusy = false
           this.items = allData;
-          return allData;
+          //return allData;
         },
         onFiltered(filteredItems) {
             // Trigger pagination to update the number of buttons/pages due to filtering
