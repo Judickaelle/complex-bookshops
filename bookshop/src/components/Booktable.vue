@@ -68,6 +68,10 @@
                 {{ row.value }}
             </template>
 
+            <template #cell(PreisNetto)="row">
+                {{ row.value }}
+            </template>
+
             <template #cell(actions)="row">
                 <b-button size="sm pr-1" @click="row.toggleDetails" class="ml-7">
                 {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
@@ -118,7 +122,8 @@ import axios from 'axios'
         items: [],
         fields: [
           { key: 'Produkttitel', label: 'Book title', sortable: true, sortDirection: 'desc' },
-          { key: 'Autorname', label: 'Author', sortable: true, sortDirection: 'desc', class: 'text-center' },
+          { key: 'PreisNetto', label: 'Price €', sortable: true, sortDirection: 'desc', class: 'text-center' },
+          { key: 'Autorname', label: 'Author', sortable: true, sortDirection: 'desc'},
           { key: 'actions', label: 'Actions' }
         ],
         totalRows: 1,
